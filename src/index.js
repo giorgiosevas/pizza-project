@@ -68,15 +68,20 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  //const pizzas = []
+  const numPizzas = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
-      </ul>
+        {numPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+        )}
     </main>
   );
 }
@@ -104,7 +109,12 @@ function Footer() {
   console.log(isOpen);
 
   return (
-    <footer>{new Date().toLocaleTimeString()} . We are currently open!</footer>
+    <footer>
+      <div className="order">
+      {isOpen && <p>We are open until {closeHour}:00! Come visit us or order online.</p>}
+      <button className="btn">Order</button>
+      </div>
+    </footer>
   );
 }
 
