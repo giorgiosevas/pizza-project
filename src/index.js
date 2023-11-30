@@ -105,7 +105,7 @@ function Pizza(props) {
 
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 21;
+  const openHour = 13;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
@@ -119,12 +119,30 @@ function Footer() {
 
   return (
     <footer>
-      <div className="order">
-      {isOpen ? <p>We are open until {closeHour}:00! Come visit us or order online.</p> : <p>We are happy to welcome you between {openHour}:00 and {closeHour}:00 !! </p>}
-      <button className="btn">Order</button>
-      </div>
+      {isOpen ? (
+        <Order
+          closeHour={closeHour}
+        />
+      ) : (
+        <p>We are happy to welcome you between {openHour}:00 and {closeHour}:00!! </p>
+      )}
     </footer>
   );
+}
+
+//I wrote it with a different way from Jonas, it is like we do it at work.
+const Order = (props) => {
+  return (
+    <div className="order">
+      <p>We are open until {props.closeHour}:00! Come visit us or order online.</p>
+      <button 
+        className="btn"
+        //onClick={console.log('Button pressed to order')}
+        >
+          Order
+      </button>
+    </div>
+  )
 }
 
 //React v18
