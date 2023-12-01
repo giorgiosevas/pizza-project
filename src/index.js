@@ -78,7 +78,10 @@ function Menu() {
         {numPizzas > 0 ? (
         <ul className="pizzas">
           {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
+            <Pizza 
+              pizzaObj={pizza}
+              key={pizza.name}
+/>
           ))}
         </ul>
         ) : <p>We are still working on our menu! Please come by later :D </p>}
@@ -86,22 +89,39 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
-  console.log(props);
+function Pizza({pizzaObj}) {
 
-  if(props.pizzaObj.soldOut) return null;
+  if(pizzaObj.soldOut) return null;
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.name} />
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price + 3}</span>
       </div>
     </li>
   );
 }
+
+//? Also I can write this component like this:
+//? function Pizza({pizzaObj}) {
+//?  const { name, ingredients, price, photoName, soldOut } = pizzaObj;
+
+//?   if (soldOut) return <p>Sold Out!!</p>;
+
+//?   return (
+//?     <li className="pizza">
+//?       <img src={photoName} alt={name} />
+//?       <div>
+//?         <h3>{name}</h3>
+//?         <p>{ingredients}</p>
+//?         <span>{price + 3}</span>
+//?       </div>
+//?     </li>
+//?   );
+//? }
 
 function Footer() {
   const hour = new Date().getHours();
@@ -121,6 +141,7 @@ function Footer() {
     <footer>
       {isOpen ? (
         <Order
+          openHour={openHour}
           closeHour={closeHour}
         />
       ) : (
@@ -131,13 +152,12 @@ function Footer() {
 }
 
 //I wrote it with a different way from Jonas, it is like we do it at work.
-const Order = (props) => {
+const Order = ({closeHour, openHour}) => {
   return (
     <div className="order">
-      <p>We are open until {props.closeHour}:00! Come visit us or order online.</p>
+      <p>We are open from {openHour}:00 to {closeHour}:00! Come visit us or order online.</p>
       <button 
         className="btn"
-        //onClick={console.log('Button pressed to order')}
         >
           Order
       </button>
